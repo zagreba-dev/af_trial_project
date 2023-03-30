@@ -15,20 +15,41 @@ class MoviesPage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (_) => MovieBloc(httpClient: ApiClient())..add(MovieFetched()),
-        child: const MoviesList(),
+        child: const MoviesScreen(),
       ),
     );
   }
 }
 
-class MoviesList extends StatefulWidget {
-  const MoviesList({super.key});
+class MoviesScreen extends StatelessWidget {
+  const MoviesScreen({super.key});
 
   @override
-  State<MoviesList> createState() => _MoviesListState();
+  Widget build(BuildContext context) {
+    return BlocBuilder<MovieBloc, MovieState>(
+      buildWhen: (previousState, state) => previousState.status != state.status,
+      builder: (context, state) {
+        switch (state.status) {
+          case MovieStatus.failure:
+            return const ErrorScreenWidget();
+          case MovieStatus.success:
+            return const _MoviesListWidget();
+          case MovieStatus.initial:
+            return const _MovieInitialWidget();
+        }
+      },
+    );
+  }
 }
 
-class _MoviesListState extends State<MoviesList> {
+class _MoviesListWidget extends StatefulWidget {
+  const _MoviesListWidget({super.key});
+
+  @override
+  State<_MoviesListWidget> createState() => _MoviesListState();
+}
+
+class _MoviesListState extends State<_MoviesListWidget> {
   final _scrollController = ScrollController();
 
   @override
@@ -39,70 +60,61 @@ class _MoviesListState extends State<MoviesList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieBloc, MovieState>(
-      builder: (context, state) {
-        switch (state.status) {
-          case MovieStatus.failure:
-            return const ErrorScreenWidget();
-          case MovieStatus.success:
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(16, 56, 18, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  RichText(
-                    text: const TextSpan(
-                      text: 'Popular ',
+    return BlocBuilder<MovieBloc, MovieState>(builder: (context, state) {
+      return Padding(
+        padding: const EdgeInsets.fromLTRB(16, 56, 18, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            RichText(
+              text: const TextSpan(
+                text: 'Popular ',
+                style: TextStyle(
+                    fontFamily: 'Rubik',
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    height: 28 / 24),
+                children: <TextSpan>[
+                  TextSpan(
+                      text: 'series',
                       style: TextStyle(
-                          fontFamily: 'Rubik',
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          height: 28 / 24),
-                      children: <TextSpan>[
-                        TextSpan(
-                            text: 'series',
-                            style: TextStyle(
-                              color: Color(0xFFDA1617),
-                            )),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 21),
-                  Expanded(
-                    child: MediaQuery.removePadding(
-                      context: context,
-                      removeTop: true,
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 15,
-                        mainAxisSpacing: 16,
-                        shrinkWrap: true,
-                        childAspectRatio: 163 / 298,
-                        controller: _scrollController,
-                        children: List.generate(state.movies.length, (index) {
-                          return InkWell(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MovieDetailsPage(
-                                      movie: state.movies[index])),
-                            ),
-                            child: MovieCardMobile(
-                              movie: state.movies[index],
-                            ),
-                          );
-                        }),
-                      ),
-                    ),
-                  ),
+                        color: Color(0xFFDA1617),
+                      )),
                 ],
               ),
-            );
-          case MovieStatus.initial:
-            return const _MovieInitialWidget();
-        }
-      },
-    );
+            ),
+            const SizedBox(height: 21),
+            Expanded(
+              child: MediaQuery.removePadding(
+                context: context,
+                removeTop: true,
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 16,
+                  shrinkWrap: true,
+                  childAspectRatio: 163 / 298,
+                  controller: _scrollController,
+                  children: List.generate(state.movies.length, (index) {
+                    return InkWell(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                MovieDetailsPage(movie: state.movies[index])),
+                      ),
+                      child: MovieCardMobile(
+                        movie: state.movies[index],
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
   @override

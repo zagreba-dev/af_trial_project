@@ -1,5 +1,6 @@
 import 'package:af_trial_project/api_clients/api_client.dart';
 import 'package:af_trial_project/entity/movie.dart';
+import 'package:collection/collection.dart';
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';

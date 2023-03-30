@@ -1,13 +1,20 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:af_trial_project/entity/movies_response.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
+import 'dart:io';
 
 class ApiClient {
-  final httpClient = http.Client();
+  final httpClient = HttpClient();
 
   Future<MoviesResponse> fetchMoviesList([int pageQuery = 0]) async {
-    final response = await httpClient.get(
+    httpClient.badCertificateCallback =
+        ((X509Certificate cert, String host, int port) {
+      final isValidHost = host == 'live.mocat.amifactory.network';
+      return isValidHost;
+    });
+    final http = IOClient(httpClient);
+    final response = await http.get(
       Uri.https(
         'live.mocat.amifactory.network',
         '/api/v1/movies/',

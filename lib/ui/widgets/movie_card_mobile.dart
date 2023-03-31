@@ -44,12 +44,7 @@ class MovieCardMobile extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         Text('${movie.title}\n',
-            maxLines: 2,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              height: 21 / 18,
-            )),
+            maxLines: 2, style: Theme.of(context).textTheme.titleSmall),
       ]),
     );
   }

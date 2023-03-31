@@ -7,16 +7,18 @@ import 'dart:io';
 class ApiClient {
   final httpClient = HttpClient();
 
+  static const host = 'live.mocat.amifactory.network';
+
   Future<MoviesResponse> fetchMoviesList([int pageQuery = 0]) async {
     httpClient.badCertificateCallback =
         ((X509Certificate cert, String host, int port) {
-      final isValidHost = host == 'live.mocat.amifactory.network';
+      final isValidHost = host == ApiClient.host;
       return isValidHost;
     });
     final http = IOClient(httpClient);
     final response = await http.get(
       Uri.https(
-        'live.mocat.amifactory.network',
+        host,
         '/api/v1/movies/',
         <String, dynamic>{
           'page': '$pageQuery',

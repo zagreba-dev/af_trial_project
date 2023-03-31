@@ -54,10 +54,8 @@ class MovieDetails extends StatelessWidget {
         Expanded(
           child: Stack(
             children: <Widget>[
-              Image.network(
-                  height: bgPictureHeigh,
-                  movie.bgPicture,
-                  fit: BoxFit.fitHeight),
+              Image.network(movie.bgPicture,
+                  height: bgPictureHeigh, fit: BoxFit.fitHeight),
               SingleChildScrollView(
                 child: Container(
                   decoration: const BoxDecoration(
@@ -89,11 +87,16 @@ class MovieDetails extends StatelessWidget {
                               mpaRating: mpaRating,
                               duration: durationData),
                           const SizedBox(height: 24),
-                          _DirectorLineWidget(directors: directors),
+                          _PersonLineWidget(
+                              typeOfPerson: 'Director: ',
+                              namesOfPersons: directors),
                           const SizedBox(height: 8),
-                          _WritersLineWidget(writers: writers),
+                          _PersonLineWidget(
+                              typeOfPerson: 'Writers: ',
+                              namesOfPersons: writers),
                           const SizedBox(height: 8),
-                          _StarsLineWidget(stars: stars),
+                          _PersonLineWidget(
+                              typeOfPerson: 'Stars: ', namesOfPersons: stars),
                           const SizedBox(height: 24)
                         ]),
                   ),
@@ -208,85 +211,25 @@ class _IconButtonArrowBackWidget extends StatelessWidget {
   }
 }
 
-class _StarsLineWidget extends StatelessWidget {
-  const _StarsLineWidget({
+class _PersonLineWidget extends StatelessWidget {
+  const _PersonLineWidget({
     Key? key,
-    required this.stars,
+    required this.typeOfPerson,
+    required this.namesOfPersons,
   }) : super(key: key);
 
-  final String stars;
+  final String typeOfPerson;
+  final String namesOfPersons;
 
   @override
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: 'Stars: ',
-        style: const TextStyle(
-            fontFamily: 'Rubik',
-            color: Color(0xFFE2E2E2),
-            fontSize: 16,
-            height: 1.4),
+        text: typeOfPerson,
+        style: Theme.of(context).textTheme.bodySmall,
         children: <TextSpan>[
           TextSpan(
-              text: stars,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w500, color: Color(0xFFFFFFFF))),
-        ],
-      ),
-    );
-  }
-}
-
-class _WritersLineWidget extends StatelessWidget {
-  const _WritersLineWidget({
-    Key? key,
-    required this.writers,
-  }) : super(key: key);
-
-  final String writers;
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: 'Writers: ',
-        style: const TextStyle(
-            fontFamily: 'Rubik',
-            color: Color(0xFFE2E2E2),
-            fontSize: 16,
-            height: 1.4),
-        children: <TextSpan>[
-          TextSpan(
-              text: writers,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w500, color: Color(0xFFFFFFFF))),
-        ],
-      ),
-    );
-  }
-}
-
-class _DirectorLineWidget extends StatelessWidget {
-  const _DirectorLineWidget({
-    Key? key,
-    required this.directors,
-  }) : super(key: key);
-
-  final String directors;
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        text: 'Director: ',
-        style: const TextStyle(
-            fontFamily: 'Rubik',
-            color: Color(0xFFE2E2E2),
-            fontSize: 16,
-            height: 1.4),
-        children: <TextSpan>[
-          TextSpan(
-              text: directors,
+              text: namesOfPersons,
               style: const TextStyle(
                   fontWeight: FontWeight.w500, color: Color(0xFFFFFFFF))),
         ],
@@ -313,30 +256,28 @@ class _GenresLineWidget extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         spacing: 12,
         children: [
-          Text(genres,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w500, height: 1.4)),
-          Container(
-              margin: const EdgeInsets.only(top: 3),
-              height: 10,
-              width: 0.1,
-              decoration: BoxDecoration(
-                  border:
-                      Border.all(color: const Color(0xFFA6A6A6), width: 0.5))),
-          Text(mpaRating,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w500, height: 1.4)),
-          Container(
-              margin: const EdgeInsets.only(top: 3),
-              height: 10,
-              width: 0.1,
-              decoration: BoxDecoration(
-                  border:
-                      Border.all(color: const Color(0xFFA6A6A6), width: 0.5))),
-          Text(duration,
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w500, height: 1.4))
+          Text(genres, style: Theme.of(context).textTheme.bodyLarge),
+          const _CustomVerticalDivider(),
+          Text(mpaRating, style: Theme.of(context).textTheme.bodyLarge),
+          const _CustomVerticalDivider(),
+          Text(duration, style: Theme.of(context).textTheme.bodyLarge)
         ]);
+  }
+}
+
+class _CustomVerticalDivider extends StatelessWidget {
+  const _CustomVerticalDivider({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.only(top: 3),
+        height: 10,
+        width: 0.1,
+        decoration: BoxDecoration(
+            border: Border.all(color: const Color(0xFFA6A6A6), width: 0.5)));
   }
 }
 
@@ -364,9 +305,7 @@ class _ReleaseYearLineWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(releaseYear,
-        style: const TextStyle(
-            fontSize: 18, fontWeight: FontWeight.w700, height: 1.4));
+    return Text(releaseYear, style: Theme.of(context).textTheme.titleMedium);
   }
 }
 
@@ -380,9 +319,7 @@ class _TitleLineWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title,
-        style: const TextStyle(
-            fontFamily: 'Krona One', fontSize: 28, height: 35 / 28));
+    return Text(title, style: Theme.of(context).textTheme.titleLarge);
   }
 }
 

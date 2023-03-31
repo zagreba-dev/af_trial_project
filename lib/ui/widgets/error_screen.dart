@@ -1,4 +1,5 @@
 import 'package:af_trial_project/bloc/movie_bloc.dart';
+import 'package:af_trial_project/ui/widgets/home_indicator_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,13 +52,7 @@ class ErrorScreenWidget extends StatelessWidget {
                         height: 17 / 14)),
               )),
           const Spacer(flex: 51),
-          Container(
-            width: 134,
-            height: 5,
-            decoration: BoxDecoration(
-                color: const Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.circular(100)),
-          ),
+          const HomeIndicatorWidget(),
           const SizedBox(height: 8),
         ],
       ),

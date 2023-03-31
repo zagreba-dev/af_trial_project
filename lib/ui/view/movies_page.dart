@@ -1,5 +1,6 @@
 import 'package:af_trial_project/api_clients/api_client.dart';
 import 'package:af_trial_project/bloc/movie_bloc.dart';
+import 'package:af_trial_project/ui/widgets/home_indicator_widget.dart';
 import 'package:af_trial_project/ui/widgets/movie_card_mobile.dart';
 import 'package:af_trial_project/ui/widgets/error_screen.dart';
 import 'package:af_trial_project/ui/widgets/movie_card_skeleton_loader.dart';
@@ -115,16 +116,7 @@ class _MoviesListState extends State<_MoviesListWidget> {
             ],
           ),
         ),
-        Positioned(
-          bottom: 8,
-          child: Container(
-            width: 134,
-            height: 5,
-            decoration: BoxDecoration(
-                color: const Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.circular(100)),
-          ),
-        ),
+        const Positioned(bottom: 8, child: HomeIndicatorWidget())
       ]);
     });
   }
@@ -174,16 +166,7 @@ class _MovieInitialWidget extends StatelessWidget {
           ),
         ),
       ),
-      Positioned(
-        bottom: 8,
-        child: Container(
-          width: 134,
-          height: 5,
-          decoration: BoxDecoration(
-              color: const Color(0xFFFFFFFF),
-              borderRadius: BorderRadius.circular(100)),
-        ),
-      ),
+      const Positioned(bottom: 8, child: HomeIndicatorWidget()),
     ]);
   }
 }

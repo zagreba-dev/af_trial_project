@@ -61,59 +61,71 @@ class _MoviesListState extends State<_MoviesListWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, MovieState>(builder: (context, state) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 56, 18, 0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            RichText(
-              text: const TextSpan(
-                text: 'Popular ',
-                style: TextStyle(
-                    fontFamily: 'Rubik',
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                    height: 28 / 24),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'series',
-                      style: TextStyle(
-                        color: Color(0xFFDA1617),
-                      )),
-                ],
-              ),
-            ),
-            const SizedBox(height: 21),
-            Expanded(
-              child: MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 16,
-                  shrinkWrap: true,
-                  childAspectRatio: 163 / 298,
-                  controller: _scrollController,
-                  children: List.generate(state.movies.length, (index) {
-                    return InkWell(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                MovieDetailsPage(movie: state.movies[index])),
-                      ),
-                      child: MovieCardMobile(
-                        movie: state.movies[index],
-                      ),
-                    );
-                  }),
+      return Stack(alignment: AlignmentDirectional.topCenter, children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 56, 18, 0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              RichText(
+                text: const TextSpan(
+                  text: 'Popular ',
+                  style: TextStyle(
+                      fontFamily: 'Rubik',
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      height: 28 / 24),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: 'series',
+                        style: TextStyle(
+                          color: Color(0xFFDA1617),
+                        )),
+                  ],
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 21),
+              Expanded(
+                child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: GridView.count(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 16,
+                    shrinkWrap: true,
+                    childAspectRatio: 163 / 298,
+                    controller: _scrollController,
+                    children: List.generate(state.movies.length, (index) {
+                      return InkWell(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MovieDetailsPage(movie: state.movies[index])),
+                        ),
+                        child: MovieCardMobile(
+                          movie: state.movies[index],
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      );
+        Positioned(
+          bottom: 8,
+          child: Container(
+            width: 134,
+            height: 5,
+            decoration: BoxDecoration(
+                color: const Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.circular(100)),
+          ),
+        ),
+      ]);
     });
   }
 

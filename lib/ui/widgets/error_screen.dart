@@ -14,17 +14,12 @@ class ErrorScreenWidget extends StatelessWidget {
           const Spacer(flex: 255),
           Column(
             children: [
-              Image.asset(
-                'assets/images/ufo_illustration_255x255.png',
-                width: 255,
-                height: 255,
-              ),
+              Image.asset('assets/images/ufo_illustration_255x255.png',
+                  width: 255, height: 255),
               const SizedBox(height: 12),
-              const Text(
-                'Ooops..',
-                style: TextStyle(
-                    fontFamily: 'Krona One', fontSize: 28, height: 35 / 28),
-              ),
+              const Text('Ooops..',
+                  style: TextStyle(
+                      fontFamily: 'Krona One', fontSize: 28, height: 35 / 28)),
               const SizedBox(height: 4),
               const Text('Something went wrong!',
                   style: TextStyle(
@@ -44,13 +39,12 @@ class ErrorScreenWidget extends StatelessWidget {
                   ..add(MovieFetched());
               },
               child: const Padding(
-                padding: EdgeInsets.fromLTRB(70, 16, 70, 15),
-                child: Text('Retry',
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700,
-                        height: 17 / 14)),
-              )),
+                  padding: EdgeInsets.fromLTRB(70, 16, 70, 15),
+                  child: Text('Retry',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          height: 17 / 14)))),
           const Spacer(flex: 51),
           const HomeIndicatorWidget(),
           const SizedBox(height: 8),

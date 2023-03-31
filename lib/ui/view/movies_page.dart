@@ -144,22 +144,34 @@ class _MovieInitialWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 60, 16, 0),
-      child: MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: GridView.count(
-          crossAxisCount: 2,
-          crossAxisSpacing: 15,
-          mainAxisSpacing: 16,
-          shrinkWrap: true,
-          childAspectRatio: 164 / 298,
-          children: List.generate(4, (index) {
-            return const MovieCardSkeletonLoader();
-          }),
+    return Stack(alignment: AlignmentDirectional.topCenter, children: [
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 60, 16, 0),
+        child: MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: 15,
+            mainAxisSpacing: 16,
+            shrinkWrap: true,
+            childAspectRatio: 164 / 298,
+            children: List.generate(4, (index) {
+              return const MovieCardSkeletonLoader();
+            }),
+          ),
         ),
       ),
-    );
+      Positioned(
+        bottom: 8,
+        child: Container(
+          width: 134,
+          height: 5,
+          decoration: BoxDecoration(
+              color: const Color(0xFFFFFFFF),
+              borderRadius: BorderRadius.circular(100)),
+        ),
+      ),
+    ]);
   }
 }

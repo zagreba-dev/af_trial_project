@@ -12,7 +12,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'MoCat Project',
       theme: ThemeData(
-        primarySwatch: Colors.brown,
         fontFamily: 'Rubik',
         textTheme: const TextTheme(
           bodyText2: TextStyle(color: Color(0xFFFFFFFF)),
